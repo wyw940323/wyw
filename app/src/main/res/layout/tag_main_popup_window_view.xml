@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="281dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_shape"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:layout_marginTop="29dp"
+            android:background="@color/transparent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/upTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="温馨提示"
+                android:textColor="@color/logo"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/downTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:gravity="center_horizontal"
+                android:text="提示内容"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/pleaseCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="请注意查收"
+                android:textColor="@color/text"
+                android:textSize="15sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#D2D3D5" />
+    <!--功能button-->
+    <LinearLayout
+        android:id="@+id/defaultBtnLi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/leftBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#f6f6f6"
+            android:text="否"
+            android:textColor="@color/logo"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#D2D3D5" />
+
+        <Button
+            android:id="@+id/rightBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text="是"
+            android:textColor="#e04339"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/knowBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="35dp"
+        android:background="#e04339"
+        android:text="我知道了"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</LinearLayout>
