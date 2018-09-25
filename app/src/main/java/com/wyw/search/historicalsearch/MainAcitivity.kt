@@ -46,7 +46,7 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     private var hisRecords = ""
 
     internal var adapters = ItemListAdapter()
-
+    internal var adapter1 = ZhuangbiListAdapter()
     private var index = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +57,9 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     protected fun bindInfoAndListener() {
         gridRv.layoutManager = GridLayoutManager(this, 2) as RecyclerView.LayoutManager?
-        gridRv.adapter = adapters
+//        gridRv.adapter = adapters
+        gridRv.adapter = adapter1
+
         swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW)
         swipeRefreshLayout.isEnabled = true
         mInflater = LayoutInflater.from(this)
@@ -198,8 +200,8 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                         0)
 
         index = 1
-        search(index, content)
-
+       // search(index, content)
+        search(content)
     }
 
     fun search(pape: Int, content: String) {
@@ -223,11 +225,10 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         none_data_li!!.visibility = View.GONE
     }
 
-    internal var adapter1 = ZhuangbiListAdapter()
 
     fun search(content: String) {
         swipeRefreshLayout!!.isRefreshing = true
-        RetrofitManager.builder("http://gank.io/api/")
+        RetrofitManager.builder("http://www.zhuangbi.info/")
                 .getBanner(content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
