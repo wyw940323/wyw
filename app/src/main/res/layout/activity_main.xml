@@ -49,7 +49,7 @@
                         android:layout_toRightOf="@+id/search_vipname"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
-                        android:hint="福利、拓展资源、前端"
+                        android:hint="可爱、装逼、在下"
                         android:imeOptions="actionSearch"
                         android:maxLength="10"
                         android:singleLine="true"
