@@ -15,11 +15,9 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import cc.shinichi.library.ImagePreview
 
 import com.example.administrator.kotlinexample.net.RetrofitManager
 import com.wyw.search.historicalsearch.util.Util
@@ -28,7 +26,6 @@ import com.wyw.search.historicalsearch.util.Util
 import com.example.administrator.kotlinexample.adapter.ItemListAdapter
 import com.example.administrator.kotlinexample.adapter.ZhuangbiListAdapter
 import com.example.administrator.kotlinexample.modle.GankBeauty
-import com.wanglu.photoviewerlibrary.PhotoViewer
 import com.wyw.search.historicalsearch.adapter.MyListener
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -63,20 +60,22 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         gridRv.layoutManager = GridLayoutManager(this, 2) as RecyclerView.LayoutManager?
         gridRv.adapter = adapters
  //       gridRv.adapter = adapter1
-        //查看多张图片还有图片多的时候有BUG只能用于两三张图片查看
-//        adapters.getListener(MyListener{
-//            v, position ->
-//            PhotoViewer
-//                    .setData(images)
-//                    .setCurrentPage(position)
-//                    .setImgContainer(gridRv)
-//                    .setShowImageViewInterface(object : PhotoViewer.ShowImageViewInterface {
-//                        override fun show(iv: ImageView, url: String) {
-//                            Glide.with(iv.context).load(url).apply(RequestOptions.placeholderOf(R.mipmap.ic_launcher)).into(iv)
-//                        }
-//                    })
-//                    .start(this)
-//        })
+        //查看多张图片
+        adapters.getListener(MyListener{
+            v, position ->
+            ImagePreview
+                    .getInstance()
+                    .setContext(this)
+                    .setIndex(position)//默认显示的下标
+                    .setImageInfoList(Util.getImageInfoList(images))
+                    .setShowDownButton(true)
+                    .setLoadStrategy(ImagePreview.LoadStrategy.NetworkAuto)
+                    .setFolderName("BigImageViewDownload")
+                    .setScaleLevel(1, 3, 5)
+                    .setZoomTransitionDuration(300)
+                    .setShowCloseButton(true)
+                    .start()
+        })
         swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW)
         swipeRefreshLayout.isEnabled = true
         mInflater = LayoutInflater.from(this)

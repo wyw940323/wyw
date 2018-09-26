@@ -12,8 +12,12 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cc.shinichi.library.bean.ImageInfo;
 
 /**
  * wyw
@@ -159,5 +163,29 @@ public class Util {
         WindowManager.LayoutParams lp = context.getWindow().getAttributes();
         lp.alpha = alpha;
         mWindow.setAttributes(lp);
+    }
+
+    public static List<ImageInfo> getImageInfoList(ArrayList<String> images){
+        ImageInfo imageInfo;
+        final List<ImageInfo> imageInfoList = new ArrayList<>();
+        for (String image : images) {
+            imageInfo = new ImageInfo();
+            imageInfo.setOriginUrl(image);// 原图
+            imageInfo.setThumbnailUrl(image);// 缩略图，实际使用中，根据需求传入缩略图路径。如果没有缩略图url，可以将两项设置为一样，并隐藏查看原图按钮即可。
+            imageInfoList.add(imageInfo);
+            imageInfo = null;
+        }
+        return imageInfoList;
+    }
+
+    public static List<ImageInfo> getImageInfoList(String images){
+        ImageInfo imageInfo;
+        final List<ImageInfo> imageInfoList = new ArrayList<>();
+            imageInfo = new ImageInfo();
+            imageInfo.setOriginUrl(images);// 原图
+            imageInfo.setThumbnailUrl(images);// 缩略图，实际使用中，根据需求传入缩略图路径。如果没有缩略图url，可以将两项设置为一样，并隐藏查看原图按钮即可。
+            imageInfoList.add(imageInfo);
+            imageInfo = null;
+        return imageInfoList;
     }
 }

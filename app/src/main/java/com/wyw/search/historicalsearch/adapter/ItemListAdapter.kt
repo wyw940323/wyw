@@ -9,19 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import cc.shinichi.library.ImagePreview
 
 import com.bumptech.glide.Glide
 import com.example.administrator.kotlinexample.modle.GankBeauty
-import com.wanglu.photoviewerlibrary.PhotoViewer
 import com.wyw.search.historicalsearch.R
 import com.wyw.search.historicalsearch.adapter.MyListener
+import com.wyw.search.historicalsearch.util.Util
 
 
 class ItemListAdapter(val activitys: AppCompatActivity) : RecyclerView.Adapter<ItemListAdapter.DebounceViewHolder>(){
     private var listener : MyListener? = null
-
     internal var images: ArrayList<GankBeauty> = arrayListOf()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebounceViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.grid_item, parent, false)
         return DebounceViewHolder(view,listener)
@@ -33,19 +32,21 @@ class ItemListAdapter(val activitys: AppCompatActivity) : RecyclerView.Adapter<I
         val image = images[position]
         Glide.with(holder.itemView.context).load(image.url).into(debounceViewHolder.imageIv)
         debounceViewHolder.descriptionTv.setText(image.createdAt)
-        debounceViewHolder.imageIv.setOnClickListener{
-            //查看单张图片
-            PhotoViewer.setClickSingleImg(image.url, debounceViewHolder.imageIv)
-                    .setShowImageViewInterface(object : PhotoViewer.ShowImageViewInterface {
-                        override fun show(iv: ImageView, url: String) {
-                            Glide.with(iv.context).clear(iv)
-                            Glide.with(iv.context).load(url).into(iv)
-                            
-                        }
-                    })
-                    .start(activitys)
-
-        }
+//        debounceViewHolder.imageIv.setOnClickListener{
+//            //查看单张图片
+//            ImagePreview
+//                    .getInstance()
+//                    .setContext(activitys)
+//                    .setIndex(0)
+//                    .setImageInfoList(Util.getImageInfoList(image.url))
+//                    .setShowDownButton(true)
+//                    .setLoadStrategy(ImagePreview.LoadStrategy.NetworkAuto)
+//                    .setFolderName("BigImageViewDownload")
+//                    .setScaleLevel(1, 3, 5)
+//                    .setZoomTransitionDuration(300)
+//                    .setShowCloseButton(true)
+//                    .start()
+//        }
     }
 
     override fun getItemCount(): Int {

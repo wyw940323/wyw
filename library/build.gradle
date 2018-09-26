@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
+  defaultConfig {
+    minSdkVersion 14
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
+}
+
+ext.supportLibVersion = '27.1.1'
+
+allprojects {
+  repositories {
+    maven { url "https://jitpack.io" }//这就是添加的
+
+  }
+}
+
+dependencies {
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  compileOnly "com.android.support:appcompat-v7:${supportLibVersion}"
+
+  // util
+  api 'com.github.SherlockGougou:SherlockUtil:v0.0.3'
+
+  // subsampling-scale-image-view
+  api 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+  // glide
+  compileOnly 'com.github.bumptech.glide:glide:4.7.1'
+  compileOnly 'com.github.bumptech.glide:annotations:4.7.1'
+  annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+  compileOnly 'com.github.bumptech.glide:okhttp3-integration:4.7.1'
+}
