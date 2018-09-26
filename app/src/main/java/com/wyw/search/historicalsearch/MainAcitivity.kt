@@ -1,10 +1,7 @@
 package com.wyw.search.historicalsearch
 
-import android.annotation.TargetApi
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
@@ -18,8 +15,11 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 import com.example.administrator.kotlinexample.net.RetrofitManager
 import com.wyw.search.historicalsearch.util.Util
@@ -27,6 +27,9 @@ import com.wyw.search.historicalsearch.util.Util
 
 import com.example.administrator.kotlinexample.adapter.ItemListAdapter
 import com.example.administrator.kotlinexample.adapter.ZhuangbiListAdapter
+import com.example.administrator.kotlinexample.modle.GankBeauty
+import com.wanglu.photoviewerlibrary.PhotoViewer
+import com.wyw.search.historicalsearch.adapter.MyListener
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,9 +48,10 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     private var content = "" //保存点击键盘搜索或界面搜索时的文字
     private var hisRecords = ""
 
-    internal var adapters = ItemListAdapter()
+    internal var adapters = ItemListAdapter(this)
     internal var adapter1 = ZhuangbiListAdapter()
     private var index = 1
+    private var images : ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +61,27 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     protected fun bindInfoAndListener() {
         gridRv.layoutManager = GridLayoutManager(this, 2) as RecyclerView.LayoutManager?
-//        gridRv.adapter = adapters
-        gridRv.adapter = adapter1
-
+        gridRv.adapter = adapters
+ //       gridRv.adapter = adapter1
+        //查看多张图片还有图片多的时候有BUG只能用于两三张图片查看
+//        adapters.getListener(MyListener{
+//            v, position ->
+//            PhotoViewer
+//                    .setData(images)
+//                    .setCurrentPage(position)
+//                    .setImgContainer(gridRv)
+//                    .setShowImageViewInterface(object : PhotoViewer.ShowImageViewInterface {
+//                        override fun show(iv: ImageView, url: String) {
+//                            Glide.with(iv.context).load(url).apply(RequestOptions.placeholderOf(R.mipmap.ic_launcher)).into(iv)
+//                        }
+//                    })
+//                    .start(this)
+//        })
         swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW)
         swipeRefreshLayout.isEnabled = true
         mInflater = LayoutInflater.from(this)
         swipeRefreshLayout.setOnRefreshListener(this)
+
         gridRv.setOnScrollListener(object : RecyclerView.OnScrollListener() {
             var lastVisibleItem: Int? = 0
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -71,7 +89,7 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem!! + 1 == adapters?.itemCount) {
                     index ++
                     search(index, content)
-                    gridRv.scrollToPosition(0)
+
                 }
             }
 
@@ -200,8 +218,9 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                         0)
 
         index = 1
-       // search(index, content)
-        search(content)
+        images.clear()
+        search(index, content)
+     //   search(content)
     }
 
     fun search(pape: Int, content: String) {
@@ -213,6 +232,7 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 .subscribe({ images ->
                     swipeRefreshLayout!!.isRefreshing = false
                     adapters.setItems(images.beauties)
+                    getImagesUir(images.beauties)
                     if(images.beauties.size>0){
                         none_data_li!!.visibility = View.GONE
                     }else{
@@ -247,4 +267,9 @@ class MainAcitivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         none_data_li!!.visibility = View.GONE
     }
 
+    fun getImagesUir(imagess: ArrayList<GankBeauty>){
+        for (gb :GankBeauty in imagess){
+            images.add(gb.url)
+        }
+    }
 }

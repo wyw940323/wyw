@@ -15,13 +15,20 @@ import com.wyw.search.historicalsearch.R
  */
 
 class ZhuangbiListAdapter : RecyclerView.Adapter<ZhuangbiListAdapter.DebounceViewHolder>() {
-    internal var images: List<ZhuangbiImage>? = null
-
-
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DebounceViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebounceViewHolder {
         val view = LayoutInflater.from(parent!!.getContext()).inflate(R.layout.grid_item, parent, false)
         return DebounceViewHolder(view)
     }
+
+    override fun onBindViewHolder(holder: DebounceViewHolder, position: Int) {
+        val debounceViewHolder = holder as DebounceViewHolder
+        val (description, image_url) = images!!.get(position)
+        Glide.with(holder.itemView.context).load(image_url).into(debounceViewHolder.imageIv)
+        debounceViewHolder.descriptionTv.setText(description)
+    }
+
+    internal var images: List<ZhuangbiImage>? = null
+
 
     override fun getItemCount(): Int {
         return if (images == null) 0 else images!!.size
@@ -30,13 +37,6 @@ class ZhuangbiListAdapter : RecyclerView.Adapter<ZhuangbiListAdapter.DebounceVie
     fun setImages(images: List<ZhuangbiImage>?) {
         this.images = images
         notifyDataSetChanged()
-    }
-
-    override fun onBindViewHolder(holder: DebounceViewHolder?, position: Int) {
-        val debounceViewHolder = holder as DebounceViewHolder
-        val (description, image_url) = images!!.get(position)
-        Glide.with(holder.itemView.context).load(image_url).into(debounceViewHolder.imageIv)
-        debounceViewHolder.descriptionTv.setText(description)
     }
 
 

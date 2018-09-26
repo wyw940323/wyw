@@ -88,6 +88,6 @@ class RetrofitManager  constructor(url: String) : Interceptor {
 
     fun getBannerGank(pape:Int,content: String): Observable<GankBeautyResult> = service!!.getBeauties(content,20, pape)
 
-    fun getBanner(key: String): Observable<List<ZhuangbiImage>> = service!!.getZhangbiImage(key)
+    fun getBanner(key: String): Observable<ArrayList<ZhuangbiImage>> = service!!.getZhangbiImage(key)
 
 }

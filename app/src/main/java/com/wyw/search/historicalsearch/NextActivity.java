@@ -158,7 +158,7 @@ public class NextActivity extends AppCompatActivity implements SwipeRefreshLayou
 
    private void search(String content) {
         swipeRefreshLayout.setRefreshing(true);
-        RetrofitManager.Companion.builder("http://gank.io/api/").getBanner(content).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((Action1) (new Action1() {
+        RetrofitManager.Companion.builder("http://www.zhuangbi.info/").getBanner(content).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe((Action1) (new Action1() {
             public void call(Object var1) {
                 this.call((List) var1);
             }
@@ -220,6 +220,7 @@ public class NextActivity extends AppCompatActivity implements SwipeRefreshLayou
                     public void onClick(View v) {
                         searchEdit.setText(str);
                         queryData(Util.changeObject2String(str));
+                        hisSearchLl.setVisibility(View.GONE);
                         serarchRl.setVisibility(View.VISIBLE);
                     }
                 });

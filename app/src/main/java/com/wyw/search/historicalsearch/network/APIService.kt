@@ -13,7 +13,7 @@ import rx.Observable
 interface APIService {
 
     @GET("search")
-    fun getZhangbiImage(@Query("q") query: String): Observable<List<ZhuangbiImage>>
+    fun getZhangbiImage(@Query("q") query: String): Observable<ArrayList<ZhuangbiImage>>
 
     @GET("data/{content}/{number}/{page}")
     fun getBeauties(@Path("content") content: String,@Path("number") number: Int, @Path("page") page: Int): Observable<GankBeautyResult>

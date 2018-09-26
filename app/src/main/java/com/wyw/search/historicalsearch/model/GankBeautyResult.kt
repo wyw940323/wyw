@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
 class GankBeautyResult {
     var error: Boolean = false
     @SerializedName("results")
-    lateinit var beauties: MutableList<GankBeauty>
+    lateinit var beauties: ArrayList<GankBeauty>
 }
